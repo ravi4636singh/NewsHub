@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NewsHub - Read Short News</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="bg-secondary position-fixed top-0 start-0 w-100 z-index header">
+        <h1 class="container py-1 d-flex justify-content-center algin-item-center">
+            <a href="/" class="text-decoration-none fs-3 logo">NewsHub</a>
+        </h1>
+    </header>
+
+    <section class="mx-2 mb-3 mt-5 pt-3 d-flex justify-content-center algin-item-center gap-1 flex-nowrap text-capitalize categories">
+        <a href="/" class="btn btn-secondary category <%= data.category === 'all' ? 'active' : '' %>">Top_News</a>
+        <a href="/national" class="btn btn-secondary category <%= data.category === 'national' ? 'active' : '' %>">india</a>
+        <a href="/world" class="btn btn-secondary category <%= data.category === 'world' ? 'active' : '' %>">world</a>
+        <a href="/business" class="btn btn-secondary category <%= data.category === 'business' ? 'active' : '' %>">business</a>
+        <a href="/sports" class="btn btn-secondary category <%= data.category === 'sports' ? 'active' : '' %>">sports</a>
+        <a href="/politics" class="btn btn-secondary category <%= data.category === 'politics' ? 'active' : '' %>">politics</a>
+        <a href="/technology" class="btn btn-secondary category <%= data.category === 'technology' ? 'active' : '' %>">technology</a>
+        <a href="/startup" class="btn btn-secondary category <%= data.category === 'startup' ? 'active' : '' %>">startup</a>
+        <a href="/entertainment" class="btn btn-secondary category <%= data.category === 'entertainment' ? 'active' : '' %>">entertainment</a>
+        <a href="/science" class="btn btn-secondary category <%= data.category === 'science' ? 'active' : '' %>">science</a>
+        <a href="/automobile" class="btn btn-secondary category <%= data.category === 'automobile' ? 'active' : '' %>">automobile</a>
+        <a href="/Unconventional" class="btn btn-secondary category <%= data.category === 'hatke' ? 'active' : '' %>">Unconventional</a>
+        <a href="/miscellaneous" class="btn btn-secondary category <%= data.category === 'miscellaneous' ? 'active' : '' %>">miscellaneous</a>
+    </section>
+
+    <!-- Main -->
+        <section class="container accordion accordion-flush" id="accordionFlushExample">
+        <% if(data){ %>
+            <% data.data.forEach((news, idx)=> { %>
+            <div class="accordion-item mx-5 mb-3 news-card">
+                <div class="row">
+                    <img src="<%= news.imageUrl %>" class="img-fluid col-lg-4 col-sm-12 img" alt="news">
+                    <div class="col-lg-8 col-sm-12 py-1 position-relative">
+                        <h2 class="collapsed news-title" data-bs-toggle="collapse" data-bs-target="#flush-<%= idx %>" aria-expanded="false" aria-controls="flush-<%= idx %>">
+                            <%= news.title %>
+                        </h2>
+                        <div class="d-flex justify-content-between algin-item-center mt-1">
+                            <span><%= news.date %>, <%= news.time %></span>
+                            <span><%= news.author %></span>
+                        </div>
+                        <div class="my-2 position-absolute bottom-0 start-0 d-flex justify-content-between algin-item-center w-100 mx-3">
+                            <div class="d-flex justify-content-center algin-item-center gap-2">
+                                <span>Share :</span>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<%= news.readMoreUrl %>" target="_blank">
+                                    <i class="bi bi-facebook" style="color: blue;"></i>
+                                </a>
+                                <a href="https://twitter.com/intent/tweet?text=<%= news.title %>.&amp;img=<%= news.imageUrl %>&amp;url=<%= news.readMoreUrl %>&amp;via=NewsHub" target="_blank">
+                                    <i class="bi bi-twitter"></i>
+                                </a>
+                                <a style="color: green;" href="https://api.whatsapp.com/send?text=<%= news.readMoreUrl %>" target="_blank">
+                                    <i class="bi bi-whatsapp"></i>
+                                </a>
+                            </div>
+                            <button class="collapsed c-btn read-btn" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<%= idx %>" aria-expanded="false" aria-controls="flush-<%= idx %>">
+                                Read More
+                                <i class="bi bi-arrow-down-circle-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="flush-<%= idx %>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <p class="fs-6 py-1 px-4"><span style="color: red; font-size: medium; font-weight: bold;">Read Short News : </span><%= news.content %></p>
+                    <div class="px-4 mb-2 d-flex justify-content-between algin-item-center">
+                        <a href="<%= news.readMoreUrl %>" target="_blank">
+                            <button type="button" class="c-btn read-btn">
+                                Read Full News
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+                        </a>
+                        <button type="button" class="c-btn close-btn" data-bs-toggle="collapse" data-bs-target="#flush-<%= idx %>" aria-expanded="false" aria-controls="flush-<%= idx %>">
+                            Close
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        <% }else{ %>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        <% } %>
+    </section>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
+    <script src="./script.js"></script>
+</body>
+
+</html>
