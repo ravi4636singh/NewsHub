@@ -25,9 +25,7 @@
 		<header class="position-fixed top-0 start-0 w-100 header text-center">
 			<a href="/" class="text-decoration-none fs-3 logo">NewsHub</a>
 
-			<nav
-				class="py-2 text-capitalize d-flex justify-content-center algin-item-center gap-2 flex-wrap categories"
-			>
+			<nav class="py-2 text-capitalize w-100 mx-auto categories">
 				<a
 					href="/"
 					class="btn btn-secondary category <%= data.category === 'all' ? 'active' : '' %>"
@@ -98,12 +96,11 @@
 
 		<!-- Main -->
 		<section
-			class="container accordion accordion-flush"
-			style="padding-top: 8rem"
+			class="container accordion accordion-flush news-cards"
 			id="accordionFlushExample"
 		>
-			<% if(data){ %> <% data.data.forEach((news, idx)=> { %>
-			<div class="accordion-item w-75 mx-auto mb-3 p-3 news-card">
+			<% if(data){ %> <% data.data.forEach((news, idx) => { %>
+			<div class="accordion-item mb-3 p-3 news-card">
 				<div class="row">
 					<img
 						src="<%= news.imageUrl %>"
@@ -113,6 +110,7 @@
 					<div class="col-lg-8 col-sm-12">
 						<h2
 							class="collapsed mb-1 news-title fs-4"
+							style="color: #6b9080"
 							data-bs-toggle="collapse"
 							data-bs-target="#flush-<%= idx %>"
 							aria-expanded="false"
@@ -123,8 +121,16 @@
 						<div
 							class="d-flex justify-content-between algin-item-center"
 						>
-							<span><%= news.date %>, <%= news.time %></span>
-							<span style="color: #6b9080; font-weight: bold"
+							<span class="fs-6"
+								><%= news.date %>, <%= news.time %></span
+							>
+							<span
+								style="
+									color: #6b9080;
+									font-weight: bold;
+									white-space: nowrap;
+									font-size: 1rem;
+								"
 								><%= news.author %></span
 							>
 						</div>
